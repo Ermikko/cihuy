@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Toko Bunga Sekar Floristt</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="shortcut icon" href="img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700&display=swap" rel="stylesheet"/>
+
+    <!-- Icon -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- AlpineJS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- App -->
+     <script src="src/app.js"></script>
+  </head>
+
+  <body>
+    <!-- JoinChat -->
+    <a href="https://wa.me/6289674289400?text=Hallo,%20Saya%20Ingin%20Pesan%20Rangkaian%20Bunga%20Yang%20Berkualitas,%20Bisa%20Dibantu?" target="_blank" class="whatsapp-button">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo">
+  </a>
+    <!-- Navbar -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Sekar Floristt</a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Katalog</a>
+        <a href="#products">Order</a>
+        <a href="#products">Promo</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="search-button"> <i data-feather="search"></i></a>
+        <a href="#" id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span class="quantity-badge" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+      
+      <!-- Search Form Start -->
+       <div class="search-form">
+        <input type="search" id="search-box" placeholder="search here...">
+        <label for="search-box"><i data-feather="search"></i></label> 
+       </div>
+       <!-- Search Form End -->
+       
+       <!-- Shopping Cart Start -->
+       <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-key="index">
+        <div class="cart-item">
+          <img :src="`img/menu/${item.img}`" :alt="item.name">
+          <div class="item-detail">
+            <h3 x-text="item.name"></h3>
+            <div class="item-price">
+              <span x-text="rupiah(item.price)"></span> &times;
+              <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+              <span x-text="item.quantity"></span>
+              <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+              <span x-text="rupiah(item.total)"></span>
+            </div>
+          </div>
+        </div>
+      </template>
+      <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem;">Cart Is Empty</h4>
+      <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+
+      <div class="form-container" x-show="$store.cart.items.length">
+        <form action="" id="checkoutform">
+          <h5>ISI SEMUA DATA</h5>
+
+          <label for="ucapan">
+            <span>Ucapan Bunga</span>
+            <input type="text" name="ucapan" id="ucapan" placeholder="Masukkan Ucapan Untuk Penerima" autocomplete="off">
+          </label>
+          <label for="nama">
+            <span>Nama Pengirim</span>
+            <input type="text" name="name" id="name" placeholder="Masukkan Nama Anda" autocomplete="off">
+          </label>
+          <label for="alamat">
+            <span>Alamat Tujuan</span>
+            <input type="url" name="alamat" id="alamat" placeholder="Masukkan Alamat / Plus Codes" autocomplete="off">
+          </label>
+          <label for="phone">
+            <span>No Penerima</span>
+            <input type="text" name="phone" id="phone" placeholder="0896*******" autocomplete="off">
+          </label>
+          <label for="ukuran">
+            <span>Ukuran Bunga</span>
+            <input type="text" name="size" id="size" placeholder="Standar / Besar" autocomplete="off">
+          </label>
+          <label for="date">
+            <span>Tanggal Kirim</span>
+            <input type="datetime-local" name="date" id="date" autocomplete="off">
+          </label>
+
+          <a href="https://wa.me/6289674289400?text=Hallo,%20Saya%20Ingin%20Pesan%20Rangkaian%20Bunga%20Yang%20Berkualitas,%20Bisa%20Dibantu?"><button class="checkout-button" type="button" id="checkout-button" value="checkout">Checkout</button></a>
+        </form>
+      </div>
+       </div>
+       <!-- Shopping Cart End -->
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Section Start -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>
+          <span>Selamat Datang di Toko Bunga</span><br />
+          <!-- <span>Toko Bunga</span> <br /> -->
+          <span>Sekar Floristt</span> <br /><br />
+        </h1>
+        <p>Kami menyediakan rangkaian bunga dengan kualitas tinggi.</p>
+        <!-- <a href="#products" class="cta">FLASH SALE</a> -->
+      </main>
+    </section>
+    <!-- Section End -->
+
+    <!-- About Section Start -->
+    <section id="about" class="about">
+      <h2>Tentang Kami</h2>
+      <div class="row">
+        <div class="about-img">
+          <img src="img/logo.png" alt="Tentang Kami">
+        </div>
+        <div class="content">
+          <h3>Kenapa memilih toko bunga kami?</h3>
+          <p>Toko Bunga Sekar Floristt sudah menjadi salah satu pusat toko bunga yang menyediakan rangkaian bunga dengan kualitas yang tinggi, dan memberikan pelayanan yang terbaik untuk pelanggan.</br></br>
+            Banyak rangkaian bunga yang kami sediakan untuk anda, Seperti</p><span>| Bunga Papan | ; Duka Cita, Ucapan Selamat, Happy Wedding, Selamat & Bahagia <br>| Bunga Handbouquet | <br>| Bunga Vas Meja | <br>| Bunga Standing |</span>
+        </div>
+      </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Menu Section Start -->
+    <section id="menu" class="menu">
+      <h2>Katalog</h2>
+      <p>Toko kami menyediakan fitur katalog yang berfungsi untuk memberikan berbagai macam rangkaian bunga yang sudah menjadi Best Seller di toko kami.
+        Bila katalog kami tidak sesuai dengan keinginan anda, Anda dapat request.
+        <br>Note= (*Code Produk)</p>
+    
+      <div class="row">
+        <div class="menu-card">
+          <img src="img/menu/PFB-150.jpeg" alt="PFB-150" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga Papan <span>Full Bunga</span></h1>
+          <p class="menu-card-price">Rp 1.500.000 (*PFB-150)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/PLU-120.jpg" alt="PLU-120" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga Papan <span>Leter U</span></h1>
+          <p class="menu-card-price">Rp 1.200.000 (*PLU-120)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/PSS-100.jpg" alt="PSS-100" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga Papan <span>Setiap Sudut</span></h1>
+          <p class="menu-card-price">Rp 1.000.000 (*PSS-100)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/PAK-075.jpeg" alt="PAK-075" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga Papan <span>Atas Kanan Kiri</span></h1>
+          <p class="menu-card-price">Rp 750.000 (*PAK-075)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/PKK-065.jpg" alt="*PKK-065" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga Papan <span>Kanan Kiri</span></h1>
+          <p class="menu-card-price">Rp 650.000 (*PKK-065)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/PAB-050.png" alt="PAB-050" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga Papan <span>Atas Bawah</span></h1>
+          <p class="menu-card-price">Rp 500.000 (*PAB-050)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/HB-020.jpg" alt="HB-020" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga <span>Hand Bouquet</span></h1>
+          <p class="menu-card-price">Rp 200.000 (*HB-020)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/VM-030.jpg" alt="VM-030" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga <span>Vas Meja</span></h1>
+          <p class="menu-card-price">Rp 300.000 (*VM-030)</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/SU-040.jpg" alt="SU-040" class="menu-card-img">
+          <h1 class="menu-card-tittle">
+            Bunga <span>Standing Ucapan</span></h1>
+          <p class="menu-card-price">Rp 400.000 (*SU-040)</p>
+        </div>
+      </div>
+    </section>
+    <!-- Menu Section End -->
+
+    <!-- Produk Section Start -->
+    <section class="products" id="products" x-data="products">
+      <h2>Special Promo</h2>
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+        <div class="product-card">
+          <div class="product-icons">
+            <a href="#" @click.prevent="$store.cart.add(item)">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <use href="src/feather-sprite.svg#shopping-cart" />
+              </svg>
+            </a>
+            <!--<a href="#" class="item-detail-button">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <use href="src/feather-sprite.svg#eye" />
+              </svg>
+            </a>-->
+          </div>
+          <div class="product-image">
+            <img :src="`img/menu/${item.img}`" :alt="item.name">
+          </div>
+          <div class="product-content">
+            <h3 x-text="item.name"></h3>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star"></i>
+            </div>
+            <div class="product-price"><span x-text="rupiah(item.price)"></span></div>
+          </div>
+        </div>
+        </template>
+      </div>
+    </section>
+     <!-- Produk Section End -->
+
+    <!-- Contact Section Start -->
+    <section id="contact" class="contact">
+      <h2>Kontak Kami</h2>
+      <p>Kami memiliki Toko Offline, Silahkan gunakan fitur dibawah agar anda mendapatkan informasi lebih lanjut tentang produk kami.</p>
+    <div class="row">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d247.06363390419494!2d110.3687255!3d-7.7879007!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a582fa4b419d1%3A0x9cb51f86c0222e02!2sSekar%20Dewi%20Florist!5e0!3m2!1sid!2sid!4v1718413177469!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
+    <form action="">
+      <div class="input-group">
+        <i data-feather="user"></i>
+        <input type="text" placeholder="Masukkan Nama Anda">
+      </div>
+      <div class="input-group">
+        <i data-feather="mail"></i>
+        <input type="email" placeholder="Masukkan Email Anda">
+      </div>
+      <div class="input-group">
+        <i data-feather="phone"></i>
+        <input type="text" placeholder="Masukkan No WA Anda">
+      </div>
+      <a href="Subscribe"><button type="submit" class="btn">Berlangganan</button></a>
+    </form>
+    </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Footer Start -->
+    <footer>
+      <div class="socials">
+        <a href="https://www.instagram.com/sekarfloristt"><i data-feather="instagram"></i></a>
+        <a href="https://shopee.co.id/shop/103041030"><i data-feather="shopping-bag"></i></a>
+        <a href="https://www.tokopedia.com/sekarfloristt"><i data-feather="truck"></i></a>
+      </div>
+      
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#menu">Katalog</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#contact">Kontak Kami</a>
+      </div>
+
+      <div class="credit">
+        <p>Created by <a href="https://www.instagram.com/ermikkosatrya/">Ermikko Satrya Abimanyu</a>. | &copy; 2024.</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Modal Item Detail Start -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x-circle"></i></a>
+        <div class="modal-content">
+          <img src="img/menu/hand.jpg" alt="Hand Bouquet">
+          <div class="product-content">
+            <h3>Bunga Hand Bouquet</h3>
+            <p>(DAPAT REQUEST UNTUK MENYESUAIKAN KEINGINAN ANDA)</p>
+            Hand Bouquet ini terbuat dari bahan-bahan yang sangat berkualitas. Kami menyediakan berbagai variasi warna, bentuk, dan ukuran hand bouquet.<br>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star"></i>
+          </div>
+          <div class="product-price">IDR 350K <span>IDR 400K</span></div>
+          <a href="#"><i data-feather="shopping-cart"></i><span>add to cart</span></a>
+          </div>
+      </div>
+    </div>
+    <!-- Modal Item Detail End -->
+
+    <!-- Icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- Javascript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
